@@ -14,5 +14,12 @@ const db={
   Sequelize,
   sequelize
 }
+db.books = require('./models/bookModel')(sequelize,DataTypes)
+db.users = require("./models/userModel")(sequelize,DataTypes)
+db.products = require("./models/productModel")(sequelize,DataTypes)
 
+
+sequelize.sync({alter:false}).then(()=>{
+  console.log("Database and table created successfully!!")
+})
 module.exports = db
