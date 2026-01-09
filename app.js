@@ -1,17 +1,21 @@
 const express = require('express')
+const { books } = require('./database/connection')
 const app = express()
 const port = process.env.PORT 
 require('./database/connection')
 
-app.get('/books', (req,res) =>{
+app.get('/books', async(req,res) =>{
   //logic to fetch books from database
+  const datas = await books.findAll()
   res.json({
-    message :"Book feteched successfully"
+    message :"Book feteched successfully",
+    data : datas
   })
 })
 
 app.post('/books', (req, res) => {
   //logic to fetch books from database
+
   res.json({
     message: 'Book created successfully'
   })
