@@ -3,6 +3,7 @@ const { books } = require('./database/connection')
 const app = express()
 const port = process.env.PORT 
 require('./database/connection')
+app.use(express.json())
 
 app.get('/books', async(req,res) =>{
   //logic to fetch books from database
@@ -13,11 +14,20 @@ app.get('/books', async(req,res) =>{
   })
 })
 
-app.post('/books', (req, res) => {
+app.post('/books', async(req, res) => {
   //logic to fetch books from database
+console.log(req.body)
+//console.log(bookName, bookPrice, bookAuthor, bookDescription)
+const {bookName, bookPrice, bookAuthor, bookDescription} = req.body
+await books.create({
+  bookName,
+  bookPrice,
+  bookAuthor,
+  bookDescription
+})
 
   res.json({
-    message: 'Book created successfully'
+    message: 'Book added successfully'
   })
 })
 
